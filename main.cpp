@@ -307,6 +307,101 @@ void sortingNamaObat(json obat)
     }
 }
 
+void transaksiData(json &obat, json &transaksi)
+{
+    string id;
+    int jumlah;
+
+    tampilkanObat(obat);
+
+    cout << "\n Masukkan ID obat : ";
+    cin >> id;
+
+    for (auto &o : obat["obat"])
+    {
+        if (o["id"] == id)
+        {
+            cout << "Masukkan Jumlah Obat yang di Beli : ";
+            cin >> jumlah;
+
+            if (jumlah > o["stok"].get<int>())
+            {
+                cout << "Stok Tidak Mencukupi!\n";
+                return;
+            }
+
+            int totalHarga = jumlah * o["harga"].get<int>();
+            cout << "\nTotal Harga : " << totalHarga << endl;
+            cout << "\nLanjutkan Pembayaran ? (y/n) : ";
+            char bayar;
+            cin >> bayar;
+
+            json t;
+
+            int nomor = transaksi["transaksi"].size() + 1;
+
+            t["id"] = "TR" + to_string(nomor);
+            t["obat"] = o["nama"];
+            t["jumlah"] = jumlah;
+            t["total"] = totalHarga;
+
+            if (bayar == 'y')
+            {
+                t["status"] = "Selesai";
+                o["stok"] = o["stok"].get<int>() - (jumlah);
+
+                cout << "\n=========== STRUK ===========\n";
+                cout << "ID Transaksi : " << t["id"] << endl;
+                cout << "Nama Obat : " << t["obat"] << endl;
+                cout << "Jumlah : " << t["jumlah"] << endl;
+                cout << "--------------------------------\n";
+                cout << "Total Bayar  : " << totalHarga << endl;
+                cout << "Status       : SELESAI\n";
+                cout << "===============================\n";
+            }
+
+            else
+            {
+                t["status"] = "Dibatalkan";
+                cout << "Transaksi Dibatalkan!\n";
+            }
+
+            transaksi["transaksi"].push_back(t);
+            saveJSON("transaksi.json", transaksi);
+            saveJSON("obat.json", obat);
+            return;
+        }
+    }
+    cout << "Data obat dengan ID " << id << " tidak ditemukan!\n";
+}
+
+void riwayatTransaksi(json transaksi)
+{
+    cout << "\n================ RIWAYAT TRANSAKSI ================\n";
+
+    cout << left
+         << setw(10) << "ID"
+         << setw(20) << "Obat"
+         << setw(10) << "Jumlah"
+         << setw(15) << "Total"
+         << setw(15) << "Status"
+         << endl;
+
+    cout << "===================================================\n";
+
+    for (auto &t : transaksi["transaksi"])
+    {
+
+        cout << left
+             << setw(10) << t["id"].get<string>()
+             << setw(20) << t["obat"].get<string>()
+             << setw(10) << t["jumlah"].get<int>()
+             << setw(15) << t["total"].get<int>()
+             << setw(15) << t["status"].get<string>()
+             << endl;
+    }
+}
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
