@@ -383,6 +383,43 @@ void menuAdmin(json &obat, json &transaksi)
     } while (pilihan != 6);
 }
 
+void viewMenu(json &obat)
+{
+    int pilihan;
+
+    do
+    {
+        cout << "===== MENU VIEW OBAT ======\n";
+        cout << "1. Tampilkan Semua Daftar Obat\n";
+        cout << "2. Cari Obat\n";
+        cout << "3. Urutkan Obat Berdasarkan Nama\n";
+        cout << "4. Kembali ke Menu Utama\n";
+        cout << "Masukkan Pilihan : ";
+        cin >> pilihan;
+
+        if (pilihan == 1)
+        {
+            tampilkanObat(obat);
+        }
+        else if (pilihan == 2)
+        {
+            searchObat(obat);
+        }
+        else if (pilihan == 3)
+        {
+            sortingNamaObat(obat);
+        }
+        else if (pilihan == 4)
+        {
+            cout << "Kembali ke Menu Utama...\n";
+        }
+        else
+        {
+            cout << "Pilihan tidak valid!\n";
+        }
+    } while (pilihan != 4);
+}
+
 void transaksiData(json &obat, json &transaksi)
 {
     string id;
