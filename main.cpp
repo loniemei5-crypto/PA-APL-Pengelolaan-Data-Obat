@@ -250,6 +250,63 @@ void hapusObat(json &obat)
     cout << "Data obat " << nama << " berhasil dihapus!\n";
 }
 
+void searchObat(json obat)
+{
+    string keyword;
+
+    cout << "Masukkan Nama Obat :";
+    cin >> keyword;
+
+    bool ditemukan = false;
+
+    for (auto &o : obat["obat"])
+    {
+        string nama = o["nama"];
+
+        if (nama.find(keyword) != string::npos)
+        {
+
+            ditemukan = true;
+
+            cout << o["id"] << " | "
+                 << o["nama"] << " | "
+                 << o["jenis"] << " | "
+                 << o["expired"] << " | "
+                 << o["harga"] << " | "
+                 << o["stok"] << endl;
+        }
+    }
+    if (!ditemukan)
+    {
+        cout << "Obat dengan nama " << keyword << " tidak ditemukan!\n";
+    }
+}
+
+void sortingNamaObat(json obat)
+{
+    vector<json> data;
+
+    for (auto &o : obat["obat"])
+    {
+        data.push_back(o);
+    }
+
+    sort(data.begin(), data.end(), [](json a, json b)
+         { return a["nama"] < b["nama"]; });
+
+    cout << "============= DAFTAR OBAT (SORTING NAMA) =============\n";
+
+    for (auto &o : data)
+    {
+        cout << o["id"] << " | "
+             << o["nama"] << " | "
+             << o["jenis"] << " | "
+             << o["expired"] << " | "
+             << o["harga"] << " | "
+             << o["stok"] << endl;
+    }
+}
+
 int main()
 {
     SetConsoleOutputCP(CP_UTF8);
