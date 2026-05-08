@@ -64,9 +64,26 @@ void registerUser(json &users)
 
     users["users"].push_back(u);
 
-    void saveJSON("users.json", users);
-
     cout << "Registrasi berhasil!\n";
+}
+
+string loginUser(json users)
+{
+    string username, password;
+
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
+    for (auto &u : users["users"])
+    {
+        if (u["username"] == username && u["password"] == password)
+        {
+            return u["role"];
+        }
+    }
+    return "gagal";
 }
 
 int main()
