@@ -1,20 +1,3 @@
 {
-    "obat": [
-        {
-            "expired": "2029-05-10",
-            "harga": 10000,
-            "id": "OB2",
-            "jenis": "sirup",
-            "nama": "obatbatuk",
-            "stok": 198
-        },
-        {
-            "expired": "2030-09-10",
-            "harga": 20000,
-            "id": "OB3",
-            "jenis": "tablet",
-            "nama": "panadon",
-            "stok": 20
-        }
-    ]
+    "obat": []
 }

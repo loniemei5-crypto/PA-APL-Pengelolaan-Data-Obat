@@ -6,14 +6,9 @@
             "username": "admin"
         },
         {
-            "password": "tes124",
+            "password": "1234",
             "role": "kasir",
-            "username": "aswad"
-        },
-        {
-            "password": "%",
-            "role": "kasir",
-            "username": "*"
+            "username": "budi"
         }
     ]
 }

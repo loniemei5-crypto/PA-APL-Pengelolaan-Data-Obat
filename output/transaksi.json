@@ -1,11 +1,3 @@
 {
-    "transaksi": [
-        {
-            "id": "TR1",
-            "jumlah": 2,
-            "obat": "obatbatuk",
-            "status": "Selesai",
-            "total": 20000
-        }
-    ]
+    "transaksi": []
 }
