@@ -60,6 +60,20 @@ void setColor(int color)
         color);
 }
 
+string formatRupiah(int angka)
+{
+    string hasil = to_string(angka);
+    int insertPosition = hasil.length() - 3;
+
+    while (insertPosition > 0)
+    {
+        hasil.insert(insertPosition, ".");
+        insertPosition -= 3;
+    }
+
+    return "Rp " + hasil;
+}
+
 vector<Obat> jsonToObat(json obatJson)
 {
     vector<Obat> data;
@@ -295,7 +309,7 @@ void tampilkanObat(vector<Obat> &data)
              << "║ "
              << setw(11) << o.jenis
              << "║ "
-             << setw(9) << o.harga
+             << setw(9) << formatRupiah(o.harga)
              << "║ "
              << setw(9) << o.stok
              << "║ "
@@ -322,25 +336,21 @@ bool validTanggal(string tanggal)
 
     ss >> tahun >> strip1 >> bulan >> strip2 >> hari;
 
-    // cek format gagal
     if (ss.fail())
     {
         return false;
     }
 
-    // cek harus pakai -
     if (strip1 != '-' || strip2 != '-')
     {
         return false;
     }
 
-    // validasi bulan
     if (bulan < 1 || bulan > 12)
     {
         return false;
     }
 
-    // validasi hari
     if (hari < 1 || hari > 31)
     {
         return false;
@@ -521,7 +531,7 @@ void updateObat(vector<Obat> &data)
     cout << "║ Nama     :" << o->nama << endl;
     cout << "║ Jenis    :" << o->jenis << endl;
     cout << "║ Expired  :" << o->expired << endl;
-    cout << "║ Harga    :" << o->harga << endl;
+    cout << "║ Harga    :" << formatRupiah(o->harga) << endl;
     cout << "║ Stok     :" << o->stok << endl;
 
     setColor(11);
@@ -551,7 +561,7 @@ void updateObat(vector<Obat> &data)
         o->jenis = input;
     }
 
-    cout << "║ Harga Baru [" << o->harga << "] : ";
+    cout << "║ Harga Baru [" << formatRupiah(o->harga) << "] : ";
     getline(cin, input);
 
     if (!input.empty())
@@ -666,7 +676,7 @@ void hapusObat(vector<Obat> &data)
     cout << "║ ID       : " << o->id << endl;
     cout << "║ Nama     : " << o->nama << endl;
     cout << "║ Jenis    : " << o->jenis << endl;
-    cout << "║ Harga    : " << o->harga << endl;
+    cout << "║ Harga    : " << formatRupiah(o->harga) << endl;
     cout << "║ Stok     : " << o->stok << endl;
     cout << "║ Expired  : " << o->expired << endl;
 
@@ -813,7 +823,7 @@ void transaksiData(vector<Obat> &data, json &transaksi)
                 cout << "Nama Obat : " << t["obat"] << endl;
                 cout << "Jumlah : " << t["jumlah"] << endl;
                 cout << "--------------------------------\n";
-                cout << "Total Bayar  : " << totalHarga << endl;
+                cout << "Total Bayar  : " << formatRupiah(totalHarga) << endl;
                 cout << "Status       : SELESAI\n";
                 cout << "===============================\n";
             }
